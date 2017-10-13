@@ -9,10 +9,15 @@ router.get('/', function(req, res, next) {
 });
 
 router.post('/getUser', function(req, res, next) {
-  var _filter = "id=" + req.body.id;
-  sql.select("users", "*", _filter, function(data) {
+  var condition = null;
+  if (req.body.id) {
+    condition = "id=" + req.body.id;
+  }
+  sql.select("users", "*", condition, function(data) {
     res.send(data);
   })
 });
+
+
 
 module.exports = router;
