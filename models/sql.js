@@ -23,7 +23,6 @@ SQL.prototype.insert = function(tableName, field, values, callback) {
   insert_field = '(' + insert_field + ')';
   insert_values = '(' + insert_values + ')';
   var sql = 'insert into ' + tableName + ' ' + insert_field + ' values ' + insert_values;
-  console.log(sql);
   query(sql, callback);
 }
 
