@@ -31,8 +31,17 @@ router.post('/addUser', function(req, res, next) {
   })
 });
 
-router.post('/modifyUser', function() {
-  
+router.post('/modifyUser', function(req, res, next) {
+  var params = {};
+  params.avatar = req.body.avatar;
+  params.username = req.body.username;
+  params.password = req.body.password;
+  params.status = req.body.status;
+  sql.update("users", params, req.body.id, function() {
+    res.send({
+      "result": 1
+    });
+  });
 });
 
 router.post('/uploadImg', function(req, res, next) {
@@ -48,7 +57,7 @@ router.post('/uploadImg', function(req, res, next) {
     res.send({
       errno: 0,
       url: imgCurr
-    })
+    });
   });
 });
 

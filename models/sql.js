@@ -26,8 +26,15 @@ SQL.prototype.insert = function(tableName, field, values, callback) {
   query(sql, callback);
 }
 
-SQL.prototype.update = function(tableName, field, values, id, callback) {
-  var sql = 'update ' + tableName + ' set ' + field + '="' + values  + '" where id="' + id + '"';
+SQL.prototype.update = function(tableName, _params, id, callback) {
+  var params = '';
+  for (var i in _params) {
+    if (_params.hasOwnProperty(i)) {
+      params += (i + '="' + _params[i] + '",');
+    }
+  }
+  params = params.slice(0, -1);
+  var sql = 'update ' + tableName + ' set ' + params  + ' where id="' + id + '"';
   query(sql, callback);
 }
 
