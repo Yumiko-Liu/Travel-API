@@ -18,7 +18,7 @@ router.post('/getUser', function(req, res, next) {
   }
   sql.select("users", "*", condition, function(data) {
     res.send(data);
-  })
+  });
 });
 
 router.post('/addUser', function(req, res, next) {
@@ -28,7 +28,7 @@ router.post('/addUser', function(req, res, next) {
     res.send({
       "result": 1
     });
-  })
+  });
 });
 
 router.post('/modifyUser', function(req, res, next) {
@@ -38,6 +38,26 @@ router.post('/modifyUser', function(req, res, next) {
   params.password = req.body.password;
   params.status = req.body.status;
   sql.update("users", params, req.body.id, function() {
+    res.send({
+      "result": 1
+    });
+  });
+});
+
+router.post('/getGuideNotes', function(req, res, next) {
+  var condition = null;
+  if (req.body.id) {
+    condition = "id=" + req.body.id;
+  }
+  sql.select("guideNotes", "*", condition, function(data) {
+    res.send(data);
+  });
+});
+
+router.post('/addGuideNotes', function(req, res, next) {
+  var fields = ["title", "cover", "pubtime", "page_view", "like_num", "city", "content", "status"];
+  var values = [req.body.title, req.body.cover, req.body.pubtime, 0, 0, req.body.city, req.body.content, req.body.status];
+  sql.insert("guideNotes", fields, values, function() {
     res.send({
       "result": 1
     });
