@@ -64,6 +64,20 @@ router.post('/addGuideNotes', function(req, res, next) {
   });
 });
 
+router.post('/modifyGuideNotes', function(req, res, next) {
+  var params = {};
+  params.title = req.body.title;
+  params.cover = req.body.cover;
+  params.city = req.body.city;
+  params.content = req.body.content;
+  params.status = req.body.status;
+  sql.update("guideNotes", params, req.body.id, function() {
+    res.send({
+      "result": 1
+    });
+  });
+});
+
 router.post('/uploadImg', function(req, res, next) {
   //生成multiparty对象，并配置上传目标路径
   var form = new multiparty.Form({uploadDir: './public/files/'});
