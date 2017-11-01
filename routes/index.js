@@ -78,6 +78,76 @@ router.post('/modifyGuideNotes', function(req, res, next) {
   });
 });
 
+router.post('/getTravelNotes', function(req, res, next) {
+  var condition = null;
+  if (req.body.id) {
+    condition = "id=" + req.body.id;
+  }
+  sql.select("travelNotes", "*", condition, function(data) {
+    res.send(data);
+  });
+});
+
+router.post('/addTravelNotes', function(req, res, next) {
+  var fields = ["title", "cover", "author", "pubtime", "page_view", "like_num", "city", "content", "status"];
+  var values = [req.body.title, req.body.cover, req.body.author, req.body.pubtime, 0, 0, req.body.city, req.body.content, req.body.status];
+  sql.insert("travelNotes", fields, values, function() {
+    res.send({
+      "result": 1
+    });
+  });
+});
+
+router.post('/modifyTravelNotes', function(req, res, next) {
+  var params = {};
+  params.title = req.body.title;
+  params.cover = req.body.cover;
+  params.author = req.body.author;
+  params.city = req.body.city;
+  params.content = req.body.content;
+  params.status = req.body.status;
+  sql.update("travelNotes", params, req.body.id, function() {
+    res.send({
+      "result": 1
+    });
+  });
+});
+
+router.post('/getDestination', function() {
+  var condition = null;
+  if (req.body.id) {
+    condition = "id=" + req.body.id;
+  }
+  sql.select("destination", "*", condition, function(data) {
+    res.send(data);
+  });
+});
+
+router.post('/addDestination', function(req, res, next) {
+  var fields = ["cover", "name_zh", "name_en", "region", "desc", "status"];
+  var values = [req.body.cover, req.body.name_zh, req.body.name_en, req.body.region, req.body.desc, req.body.status];
+  sql.insert("destination", fields, values, function() {
+    res.send({
+      "result": 1
+    });
+  });
+});
+
+router.post('/modifyDestination', function(req, res, next) {
+  var params = {};
+  params.cover = req.body.cover;
+  params.name_zh = req.body.name_zh;
+  params.name_en = req.body.name_en;
+  params.region = req.body.region;
+  params.desc = req.body.desc;
+  params.status = req.body.status;
+  sql.update("destination", params, req.body.id, function() {
+    res.send({
+      "result": 1
+    });
+  });
+});
+
 router.post('/uploadImg', function(req, res, next) {
   //生成multiparty对象，并配置上传目标路径
   var form = new multiparty.Form({uploadDir: './public/files/'});
