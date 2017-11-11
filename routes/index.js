@@ -113,7 +113,7 @@ router.post('/modifyTravelNotes', function(req, res, next) {
   });
 });
 
-router.post('/getDestination', function() {
+router.post('/getDestination', function(req, res, next) {
   var condition = null;
   if (req.body.id) {
     condition = "id=" + req.body.id;
@@ -124,8 +124,8 @@ router.post('/getDestination', function() {
 });
 
 router.post('/addDestination', function(req, res, next) {
-  var fields = ["cover", "name_zh", "name_en", "region", "desc", "status"];
-  var values = [req.body.cover, req.body.name_zh, req.body.name_en, req.body.region, req.body.desc, req.body.status];
+  var fields = ["cover", "name_zh", "name_en", "region", "description", "status"];
+  var values = [req.body.cover, req.body.name_zh, req.body.name_en, req.body.region, req.body.description, +req.body.status];
   sql.insert("destination", fields, values, function() {
     res.send({
       "result": 1
@@ -139,7 +139,7 @@ router.post('/modifyDestination', function(req, res, next) {
   params.name_zh = req.body.name_zh;
   params.name_en = req.body.name_en;
   params.region = req.body.region;
-  params.desc = req.body.desc;
+  params.description = req.body.description;
   params.status = req.body.status;
   sql.update("destination", params, req.body.id, function() {
     res.send({
