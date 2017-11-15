@@ -5,10 +5,12 @@ var connection = mysql.createConnection(db.config);
 function SQL() {}
 
 SQL.prototype.select = function(tableName, field, condition, callback) {
-  if (condition) {
-      var sql = 'select ' + field + ' from ' + tableName + ' where ' + condition;
+  if (condition.indexOf("id=") !== -1) {
+    var sql = 'select ' + field + ' from ' + tableName + ' where ' + condition;
+  } else if (condition.indexOf("order by") !== -1) {
+    var sql = 'select ' + field + ' from ' + tableName + condition;
   } else {
-      var sql = 'select ' + field + ' from ' + tableName;
+    var sql = 'select ' + field + ' from ' + tableName;
   }
   query(sql, callback);
 }
@@ -17,8 +19,8 @@ SQL.prototype.insert = function(tableName, field, values, callback) {
   var insert_field = field[0];
   var insert_values = "'" + values[0] + "'";
   for (var i = 1; i < field.length; i++) {
-      insert_field += ',' + field[i];
-      insert_values += ", '" + values[i] + "'";
+    insert_field += ',' + field[i];
+    insert_values += ", '" + values[i] + "'";
   }
   insert_field = '(' + insert_field + ')';
   insert_values = '(' + insert_values + ')';
