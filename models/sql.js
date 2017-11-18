@@ -5,9 +5,7 @@ var connection = mysql.createConnection(db.config);
 function SQL() {}
 
 SQL.prototype.select = function(tableName, field, condition, callback) {
-  if (condition.indexOf("id=") !== -1) {
-    var sql = 'select ' + field + ' from ' + tableName + ' where ' + condition;
-  } else if (condition.indexOf("order by") !== -1) {
+  if (condition) {
     var sql = 'select ' + field + ' from ' + tableName + condition;
   } else {
     var sql = 'select ' + field + ' from ' + tableName;

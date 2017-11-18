@@ -49,7 +49,7 @@ router.post('/getGuideNotes', function(req, res, next) {
   if (req.body.id) {
     condition = "id=" + req.body.id;
   }
-  sql.select("guideNotes", "*", condition, function(data) {
+  sql.select("guidenotes", "*", condition, function(data) {
     res.send(data);
   });
 });
@@ -57,7 +57,7 @@ router.post('/getGuideNotes', function(req, res, next) {
 router.post('/addGuideNotes', function(req, res, next) {
   var fields = ["title", "cover", "pubtime", "page_view", "like_num", "city", "content", "status"];
   var values = [req.body.title, req.body.cover, req.body.pubtime, 0, 0, req.body.city, req.body.content, req.body.status];
-  sql.insert("guideNotes", fields, values, function() {
+  sql.insert("guidenotes", fields, values, function() {
     res.send({
       "result": 1
     });
@@ -71,7 +71,7 @@ router.post('/modifyGuideNotes', function(req, res, next) {
   params.city = req.body.city;
   params.content = req.body.content;
   params.status = req.body.status;
-  sql.update("guideNotes", params, req.body.id, function() {
+  sql.update("guidenotes", params, req.body.id, function() {
     res.send({
       "result": 1
     });
@@ -83,7 +83,7 @@ router.post('/getTravelNotes', function(req, res, next) {
   if (req.body.id) {
     condition = "id=" + req.body.id;
   }
-  sql.select("travelNotes", "*", condition, function(data) {
+  sql.select("travelnotes", "*", condition, function(data) {
     res.send(data);
   });
 });
@@ -91,7 +91,7 @@ router.post('/getTravelNotes', function(req, res, next) {
 router.post('/addTravelNotes', function(req, res, next) {
   var fields = ["title", "cover", "author", "pubtime", "page_view", "like_num", "city", "content", "status"];
   var values = [req.body.title, req.body.cover, req.body.author, req.body.pubtime, 0, 0, req.body.city, req.body.content, req.body.status];
-  sql.insert("travelNotes", fields, values, function() {
+  sql.insert("travelnotes", fields, values, function() {
     res.send({
       "result": 1
     });
@@ -106,7 +106,7 @@ router.post('/modifyTravelNotes', function(req, res, next) {
   params.city = req.body.city;
   params.content = req.body.content;
   params.status = req.body.status;
-  sql.update("travelNotes", params, req.body.id, function() {
+  sql.update("travelnotes", params, req.body.id, function() {
     res.send({
       "result": 1
     });
