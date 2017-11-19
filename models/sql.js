@@ -30,7 +30,7 @@ SQL.prototype.update = function(tableName, _params, id, callback) {
   var params = '';
   for (var i in _params) {
     if (_params.hasOwnProperty(i)) {
-      params += (i + '="' + _params[i] + '",');
+      params += (i + "='" + _params[i] + "',");
     }
   }
   params = params.slice(0, -1);

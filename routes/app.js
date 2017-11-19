@@ -11,7 +11,7 @@ router.get('/getGuideNotes', function(req, res, next) {
   } else {
     condition += ' order by page_view desc';
   }
-  sql.select("guideNotes", "*", condition, function(data) {
+  sql.select("guidenotes", "*", condition, function(data) {
     res.send(data);
   });
 });
@@ -23,7 +23,7 @@ router.get('/getTravelNotes', function(req, res, next) {
   } else {
     condition += ' order by page_view desc';
   }
-  sql.select("travelNotes", "*", condition, function(data) {
+  sql.select("travelnotes", "*", condition, function(data) {
     res.send(data);
   });
 });
