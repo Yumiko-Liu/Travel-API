@@ -1,6 +1,5 @@
 var express = require('express');
-var async = require('async'); 
-var step = require('step');
+var async = require('async');
 var router = express.Router();
 var SQL = require('../models/sql');
 var sql = new SQL();
@@ -10,6 +9,8 @@ router.get('/getGuideNotes', function(req, res, next) {
   var condition = ' where status=1 ';
   if (req.query.id) {
     condition += 'and id=' + req.query.id + ' order by page_view desc';
+  } else if (req.query.city) {
+    condition += 'and city="' + req.query.city + '" order by page_view desc';
   } else {
     condition += ' order by page_view desc';
   }
@@ -63,6 +64,50 @@ router.get('/getAllDestination', function(req, res, next) {
 
   });
 
+});
+
+router.get('/addGuideNotesPageView', function(req, res, next) {
+  var params = {
+    plus: "page_view"
+  };
+  sql.update("guidenotes", params, req.query.id, function() {
+    res.send({
+      "result": 1
+    });
+  });
+});
+
+router.get('/addTravelNotesPageView', function(req, res, next) {
+  var params = {
+    plus: "page_view"
+  };
+  sql.update("travelnotes", params, req.query.id, function() {
+    res.send({
+      "result": 1
+    });
+  });
+});
+
+router.get('/addGuideNotesLike', function(req, res, next) {
+  var params = {
+    plus: "like_num"
+  };
+  sql.update("guidenotes", params, req.query.id, function() {
+    res.send({
+      "result": 1
+    });
+  });
+});
+
+router.get('/addTravelNotesLike', function(req, res, next) {
+  var params = {
+    plus: "like_num"
+  };
+  sql.update("travelnotes", params, req.query.id, function() {
+    res.send({
+      "result": 1
+    });
+  });
 });
 
 module.exports = router;

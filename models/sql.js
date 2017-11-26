@@ -27,14 +27,19 @@ SQL.prototype.insert = function(tableName, field, values, callback) {
 }
 
 SQL.prototype.update = function(tableName, _params, id, callback) {
-  var params = '';
-  for (var i in _params) {
-    if (_params.hasOwnProperty(i)) {
-      params += (i + "='" + _params[i] + "',");
+  if (Object.keys(_params).length === 1 && _params.plus) {
+    var params = _params.plus + '=' + _params.plus +'+1';
+  } else {
+    var params = '';
+    for (var i in _params) {
+      if (_params.hasOwnProperty(i)) {
+        params += (i + "='" + _params[i] + "',");
+      }
     }
+    params = params.slice(0, -1);
   }
-  params = params.slice(0, -1);
-  var sql = 'update ' + tableName + ' set ' + params  + ' where id="' + id + '"';
+  var sql = 'update ' + tableName + ' set ' + params + ' where id="' + id + '"';
+  console.log(sql);
   query(sql, callback);
 }
 
