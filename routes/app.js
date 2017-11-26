@@ -5,6 +5,18 @@ var SQL = require('../models/sql');
 var sql = new SQL();
 
 /* APP Interface */
+router.get('/getUsers', function(req, res, next) {
+  var condition = ' where status=1 ';
+  if (req.query.id) {
+    condition += 'and id=' + req.query.id + ' order by fans_num desc';
+  }else {
+    condition += ' order by fans_num desc';
+  }
+  sql.select("users", "*", condition, function(data) {
+    res.send(data);
+  });
+});
+
 router.get('/getGuideNotes', function(req, res, next) {
   var condition = ' where status=1 ';
   if (req.query.id) {
