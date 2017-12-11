@@ -1,6 +1,8 @@
 var mysql = require('mysql');
 var db = require('./db');
-var connection = mysql.createConnection(db.config);
+// var connection = mysql.createConnection(db.config);
+var pool =  mysql.createPool(db.config);
+
 
 function SQL() {}
 
@@ -49,14 +51,17 @@ SQL.prototype.delete = function(tableName, id, callback) {
 }
 
 function query(_sql, callback) {
-  connection.query(_sql, function(err, res) {
-    if (res) {
-      res = JSON.stringify(res);
-      res = JSON.parse(res);
-      callback(res);
-    } else if (err) {
-      console.log(err);
-    }
+  pool.getConnection(function(err, connection){
+    connection.query(_sql, function(err, res) {
+      if (res) {
+        res = JSON.stringify(res);
+        res = JSON.parse(res);
+        callback(res);
+      } else if (err) {
+        console.log(err);
+      }
+    });
+    connection.release();
   });
 }
 
