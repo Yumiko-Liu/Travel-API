@@ -22,6 +22,16 @@ router.post('/getUser', function(req, res, next) {
   });
 });
 
+router.post('/login', function(req, res, next) {
+  sql.select("users", "*", " where id=100", function(data) {
+    if (req.body.username == data[0].username && req.body.password == data[0].password) {
+      res.send({"result": 1});
+    } else {
+      res.send({"result": 2});
+    }
+  });
+});
+
 router.post('/addUser', function(req, res, next) {
   var fields = ["avatar", "username", "password", "notes_num", "fans_num", "status"];
   var values = [req.body.avatar, req.body.username, req.body.password, 0, 0, req.body.status];
